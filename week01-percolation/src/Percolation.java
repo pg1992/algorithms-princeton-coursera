@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.StdIn;
 public class Percolation {
 
     private final WeightedQuickUnionUF connectedSites;
+    private final WeightedQuickUnionUF antiBackwash;
     private final int latticeSize;
     private final int top, bottom;
     private int numberOfOpenSites;
@@ -21,6 +22,7 @@ public class Percolation {
 
         latticeSize = n;
         connectedSites = new WeightedQuickUnionUF(numPoints);
+        antiBackwash = new WeightedQuickUnionUF(numPoints);
         allSites = new byte[numPoints];
 
         top = numPoints - 2;
@@ -48,8 +50,11 @@ public class Percolation {
     private void tryToConnect(int first, int second) {
         boolean isOpen = allSites[second] == 1;
 
-        if (isOpen)
+        if (isOpen) {
             connectedSites.union(first, second);
+            if (second != bottom)
+                antiBackwash.union(first, second);
+        }
     }
 
     /**
@@ -117,7 +122,7 @@ public class Percolation {
     public boolean isFull(int row, int col) {
         validate(row, col);
 
-        return connectedSites.connected(top, xyToArrayIndex(row, col));
+        return antiBackwash.connected(top, xyToArrayIndex(row, col));
     }
 
     /**
