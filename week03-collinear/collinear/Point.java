@@ -59,7 +59,13 @@ public class Point implements Comparable<Point> {
      * @return the slope between this point and the specified point
      */
     public double slopeTo(Point that) {
-        /* YOUR CODE HERE */
+        double dy = that.y - this.y;
+        double dx = that.x - this.x;
+
+        if (dy == 0 && dx == 0) return Double.NEGATIVE_INFINITY;
+        else if (dx == 0) return Double.POSITIVE_INFINITY;
+        else if (dy == 0) return +0;
+        else return dy / dx;
     }
 
     /**
@@ -75,7 +81,11 @@ public class Point implements Comparable<Point> {
      *         argument point
      */
     public int compareTo(Point that) {
-        /* YOUR CODE HERE */
+        if (this.y < that.y) return -1;
+        else if (this.y > that.y) return +1;
+        else if (this.x < that.x) return -1;
+        else if (this.x > that.x) return +1;
+        else return 0;
     }
 
     /**
@@ -85,7 +95,22 @@ public class Point implements Comparable<Point> {
      * @return the Comparator that defines this ordering on points
      */
     public Comparator<Point> slopeOrder() {
-        /* YOUR CODE HERE */
+        return new BySlope();
+    }
+
+
+    private class BySlope implements Comparator<Point> {
+
+        public int compare(Point p1, Point p2) {
+            Point p0 = Point.this;
+            double slope1 = p0.slopeTo(p1);
+            double slope2 = p0.slopeTo(p2);
+
+            if (slope1 < slope2) return -1;
+            else if (slope1 < slope2) return +1;
+            else return 0;
+        }
+
     }
 
 
@@ -105,6 +130,26 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
+        int n = 50;
+
+        if (args.length > 0)
+            n = Integer.parseInt(args[0]);
+
+        double div = 2 * Math.PI / n;
+        int radius = 100;
+
+        int x, y;
+        Point[] circle = new Point[n];
+        Point origin = new Point(radius, radius);
+
+        for (int i = 0; i < n; i++) {
+            x = (int) (radius * Math.cos(i * div) + radius);
+            y = (int) (radius * Math.sin(i * div) + radius);
+            circle[i] = new Point(x, y);
+        }
+
+        for (Point p: circle)
+            System.out.println("Slope from: " + origin + " to " + p +
+                    " = " + origin.slopeTo(p));
     }
 }
