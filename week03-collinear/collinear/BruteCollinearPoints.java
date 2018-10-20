@@ -1,7 +1,3 @@
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.In;
 import java.util.Arrays;
 
 public class BruteCollinearPoints {
@@ -77,64 +73,6 @@ public class BruteCollinearPoints {
 
 
     public static void main(String[] args) {
-        // Testing exceptions
-        try {
-            BruteCollinearPoints b = new BruteCollinearPoints(null);
-        }
-        catch (IllegalArgumentException ex) {
-            StdOut.println(ex);
-        }
-
-        try {
-            BruteCollinearPoints b = new BruteCollinearPoints(
-                    new Point[] {null, new Point(0, 0)}
-                    );
-        }
-        catch (IllegalArgumentException ex) {
-            StdOut.println(ex);
-        }
-
-        try {
-            BruteCollinearPoints b = new BruteCollinearPoints(
-                    new Point[] {
-                        new Point(1, 2),
-                        new Point(0, 0),
-                        new Point(1, 2),
-                        new Point(0, 0),
-                    }
-            );
-        }
-        catch (IllegalArgumentException ex) {
-            StdOut.println(ex);
-        }
-
-        // read the n points from a file
-        In in = new In(args[0]);
-        int n = in.readInt();
-        Point[] points = new Point[n];
-        for (int i = 0; i < n; i++) {
-            int x = in.readInt();
-            int y = in.readInt();
-            points[i] = new Point(x, y);
-        }
-
-        // draw the points
-        StdDraw.enableDoubleBuffering();
-        StdDraw.setXscale(0, 32768);
-        StdDraw.setYscale(0, 32768);
-        for (Point p : points) {
-            p.draw();
-        }
-        StdDraw.show();
-
-        // print and draw the line segments
-        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
-        StdOut.println("There are " + collinear.numberOfSegments() + " segments");
-        for (LineSegment segment : collinear.segments()) {
-            StdOut.println(segment);
-            segment.draw();
-        }
-        StdDraw.show();
     }
 
 }
