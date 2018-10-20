@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class BruteCollinearPoints {
 
     private int numberOfSegments;
-    private LineSegment[] segments;
+    private LineSegment[] segments = new LineSegment[0];
 
     private void validate(Point[] points) {
         if (points == null)
