@@ -1,26 +1,15 @@
-import java.util.Arrays;
-
 public class BruteCollinearPoints {
 
-    private int numberOfSegments;
-    private LineSegment[] segments = new LineSegment[0];
+    private int nsegs;
+    private Point[][] endPoints = new Point[0][2];
+    private LineSegment[] segs;
 
-    private void validate(Point[] points) {
-        if (points == null)
-            throw new IllegalArgumentException("Argument can't be null");
+    public BruteCollinearPoints(Point[] inputPoints) {
+        validate(inputPoints);
 
-        for (Point p: points)
-            if (p == null)
-                throw new IllegalArgumentException("No point can be null");
-
+        Point[] points = new Point[inputPoints.length];
         for (int i = 0; i < points.length; i++)
-            for (int j = i + 1; j < points.length; j++)
-                if (points[i].compareTo(points[j]) == 0)
-                    throw new IllegalArgumentException("Duplicated points");
-    }
-
-    public BruteCollinearPoints(Point[] points) {
-        validate(points);
+            points[i] = inputPoints[i];
 
         for (int i = 0; i < points.length; i++) {
             Point p = points[i];
@@ -39,40 +28,65 @@ public class BruteCollinearPoints {
                         Point s = points[l];
                         double slopePS = p.slopeTo(s);
 
-                        if (slopePS == slopePR)
-                            includeSegment(new Point[] {p, q, r, s});
+                        if (slopePS == slopePR) {
+                            Point min = p;
+                            Point max = p;
+
+                            for (Point pt : new Point[] {q, r, s}) {
+                                if (pt.compareTo(max) > 0) max = pt;
+                                if (pt.compareTo(min) < 0) min = pt;
+                            }
+                            includeSegment(min, max);
+                        }
                     }
                 }
             }
         }
+
+        segs = new LineSegment[nsegs];
     }
 
-    private void includeSegment(Point[] points) {
-        Arrays.sort(points);
-        LineSegment cur = new LineSegment(points[0], points[points.length - 1]);
+    private void validate(Point[] points) {
+        if (points == null)
+            throw new IllegalArgumentException("Argument can't be null");
 
-        if (segments != null)
-            for (LineSegment segment : segments)
-                if (segment.toString().equals(cur.toString())) return;
+        for (Point p: points)
+            if (p == null)
+                throw new IllegalArgumentException("No point can be null");
 
-        LineSegment[] tmp = new LineSegment[numberOfSegments + 1];
-        for (int i = 0; i < numberOfSegments; i++)
-            tmp[i] = segments[i];
+        for (int i = 0; i < points.length; i++)
+            for (int j = i + 1; j < points.length; j++)
+                if (points[i].compareTo(points[j]) == 0)
+                    throw new IllegalArgumentException("Duplicated points");
+    }
 
-        segments = tmp;
-        segments[numberOfSegments++] = cur;
+    private void includeSegment(Point min, Point max) {
+        for (Point[] pair : endPoints)
+            if (pair[0] == min && pair[1] == max)
+                return;
+
+        nsegs++;
+
+        if (endPoints.length <= nsegs) resize(2 * nsegs);
+        endPoints[nsegs - 1] = new Point[] {min, max};
+    }
+
+    private void resize(int size) {
+        Point[][] newPoints = new Point[size][2];
+        for (int i = 0; i < endPoints.length; i++)
+            newPoints[i] = endPoints[i];
+        endPoints = newPoints;
     }
 
     public int numberOfSegments() {
-        return numberOfSegments;
+        return nsegs;
     }
 
     public LineSegment[] segments() {
-        return segments;
-    }
+        for (int i = 0; i < nsegs; i++)
+            segs[i] = new LineSegment(endPoints[i][0], endPoints[i][1]);
 
-
-    public static void main(String[] args) {
+        return segs;
     }
 
 }
