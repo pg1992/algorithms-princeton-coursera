@@ -2,6 +2,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Pedro Guilherme S. Moreira
+ *
+ */
 public class SolverTest {
 
 	@Test

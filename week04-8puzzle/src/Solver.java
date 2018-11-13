@@ -1,8 +1,18 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
+/**
+ * 
+ * @author Pedro Guilherme S. Moreira
+ *
+ */
 public class Solver {
 	
+	/**
+	 * Find a solution to the {@code initial} board (using the A* algorithm).
+	 * 
+	 * @param initial a {@link Board} object with the initial configuration
+	 */
 	public Solver(Board initial) {
 		
 	}

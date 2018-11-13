@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.Queue;
 public class Board {
 	
 	/**
-	 * The core of the immutability of {@code Board}.
+	 * The core of the immutability of {@link Board}.
 	 */
 	private final int[][] BLOCKS;
 	/**
@@ -108,7 +108,7 @@ public class Board {
     /**
      * Generates a board that is obtained by exchanging any pair of blocks.
      * 
-     * @return a {@code Board} with the same configuration but with the
+     * @return a {@link Board} with the same configuration but with the
      * 		   first 2 horizontal adjacent blocks exchanged
      */
     public Board twin() {
