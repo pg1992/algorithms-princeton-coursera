@@ -15,11 +15,6 @@ public class Board {
 	 */
 	private final int N;
 	/**
-	 * Every time a new instance is created, the goal is created for that particular
-	 * dimension.
-	 */
-	private final int[][] goal;
-	/**
 	 * The index of the hole in the board.
 	 */
 	private final int iHole, jHole;
@@ -44,8 +39,6 @@ public class Board {
 
 		iHole = i;
 		jHole = j;
-
-		goal = generateGoal(N);
 	}
 
 	/**
@@ -64,6 +57,7 @@ public class Board {
 	 */
 	public int hamming() {
 		int accum = 0;
+		int[][] goal = generateGoal(N);
 
 		for (int i = 0; i < N; i++)
 			for (int j = 0; j < N; j++) {
