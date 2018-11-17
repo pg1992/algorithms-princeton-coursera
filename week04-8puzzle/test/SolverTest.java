@@ -16,6 +16,7 @@ public class SolverTest {
 	private static Solver unsolvable;
 	private static Solver anotherSolvable;
 	private static Solver anotherUnsolvable;
+	private static Solver puzzle17;
 
 	@BeforeClass
 	public static void initAllSolvers() {
@@ -28,6 +29,8 @@ public class SolverTest {
 
 		anotherUnsolvable = new Solver(
 				new Board(new int[][] { { 3, 2, 4, 8 }, { 1, 6, 0, 12 }, { 5, 10, 7, 11 }, { 9, 13, 14, 15 }, }));
+
+		puzzle17 = new Solver(new Board(new int[][] { { 5, 1, 8 }, { 2, 7, 3 }, { 4, 0, 6 }, }));
 	}
 
 	@Test
@@ -69,6 +72,19 @@ public class SolverTest {
 		for (Board sol : anotherSolvable.solution())
 			solutionLength++;
 		assertEquals(11, solutionLength);
+	}
+	
+	@Test
+	public void testPuzzle17Moves() {
+		assertEquals(17, puzzle17.moves());
+	}
+	
+	@Test
+	public void testPuzzle17Solution() {
+		int solutionLength = 0;
+		for (Board sol : puzzle17.solution())
+			solutionLength++;
+		assertEquals(18, solutionLength);
 	}
 
 }
