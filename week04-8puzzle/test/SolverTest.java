@@ -1,6 +1,8 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,8 +51,18 @@ public class SolverTest {
 	}
 
 	@Test
-	public void testMoves() {
+	public void testSolvableMoves() {
 		assertEquals(4, solvable.moves());
+	}
+
+	@Test
+	public void testUnsolvableMoves() {
+		assertEquals(-1, unsolvable.moves());
+	}
+
+	@Test
+	public void testUnsolvableSolutionIsNull() {
+		assertNull(unsolvable.solution());
 	}
 
 	@Test
@@ -59,6 +71,16 @@ public class SolverTest {
 		for (Board sol : solvable.solution())
 			solutionLength++;
 		assertEquals(5, solutionLength);
+	}
+
+	@Test
+	public void testIllegalArgumentExceptionWhenNull() {
+		try {
+			Solver s = new Solver(null);
+			fail("Should throw IllegalArgumentException");
+		} catch (IllegalArgumentException ex) {
+			assertTrue(true);
+		}
 	}
 
 	@Test
@@ -73,12 +95,12 @@ public class SolverTest {
 			solutionLength++;
 		assertEquals(11, solutionLength);
 	}
-	
+
 	@Test
 	public void testPuzzle17Moves() {
 		assertEquals(17, puzzle17.moves());
 	}
-	
+
 	@Test
 	public void testPuzzle17Solution() {
 		int solutionLength = 0;

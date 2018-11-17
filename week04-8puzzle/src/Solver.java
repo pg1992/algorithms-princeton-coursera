@@ -28,6 +28,9 @@ public class Solver {
 	 * @param initial a {@link Board} object with the initial configuration
 	 */
 	public Solver(Board initial) {
+		if (initial == null)
+			throw new IllegalArgumentException("Argument cannot be null");
+
 		PQNode cur;
 		PQNode curTwin;
 
@@ -79,10 +82,15 @@ public class Solver {
 	}
 
 	public int moves() {
+		if (!solvable)
+			return -1;
 		return steps.peekLast().moves;
 	}
 
 	public Iterable<Board> solution() {
+		if (!solvable)
+			return null;
+
 		Deque<Board> boardSteps = new LinkedList<>();
 
 		for (PQNode pqn : steps)
