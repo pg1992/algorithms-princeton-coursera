@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.SET;
 
 public class PointSET {
 	private SET<Point2D> points;
-	
+
 	public PointSET() {
 		points = new SET<>();
 	}
@@ -25,12 +25,12 @@ public class PointSET {
 	public boolean contains(Point2D p) {
 		return points.contains(p);
 	}
-	
+
 	public void draw() {
 		for (Point2D p : points)
 			p.draw();
 	}
-	
+
 	public Iterable<Point2D> range(RectHV rect) {
 		if (rect == null)
 			throw new IllegalArgumentException();
@@ -41,7 +41,7 @@ public class PointSET {
 		}
 		return pq;
 	}
-	
+
 	public Point2D nearest(Point2D p) {
 		if (p == null)
 			throw new IllegalArgumentException();
