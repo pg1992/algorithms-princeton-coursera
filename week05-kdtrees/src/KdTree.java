@@ -191,8 +191,50 @@ public class KdTree {
 		}
 
 		double dist = n.point.distanceSquaredTo(p);
-		Point2D pl = nearest(n.left, p, leftLimits, Math.min(dist, minDist));
-		Point2D pr = nearest(n.right, p, rightLimits, Math.min(dist, minDist));
+		Point2D pl = null;
+		Point2D pr = null;
+		
+		if (n.horizontal) {
+			if (p.y() > n.point.y()) {
+				if (rightLimits.distanceSquaredTo(p) < minDist)
+					pr = nearest(n.right, p, rightLimits, Math.min(dist, minDist));
+				if (pr != null)
+					minDist = Math.min(p.distanceSquaredTo(pr), minDist);
+				if (leftLimits.distanceSquaredTo(p) < minDist)
+					pl = nearest(n.left, p, leftLimits, Math.min(dist, minDist));
+				if (pl != null)
+					minDist = Math.min(p.distanceSquaredTo(pl), minDist);
+			} else {
+				if (leftLimits.distanceSquaredTo(p) < minDist)
+					pl = nearest(n.left, p, leftLimits, Math.min(dist, minDist));
+				if (pl != null)
+					minDist = Math.min(p.distanceSquaredTo(pl), minDist);
+				if (rightLimits.distanceSquaredTo(p) < minDist)
+					pr = nearest(n.right, p, rightLimits, Math.min(dist, minDist));
+				if (pr != null)
+					minDist = Math.min(p.distanceSquaredTo(pr), minDist);
+			}
+		} else {
+			if (p.x() > n.point.x()) {
+				if (rightLimits.distanceSquaredTo(p) < minDist)
+					pr = nearest(n.right, p, rightLimits, Math.min(dist, minDist));
+				if (pr != null)
+					minDist = Math.min(p.distanceSquaredTo(pr), minDist);
+				if (leftLimits.distanceSquaredTo(p) < minDist)
+					pl = nearest(n.left, p, leftLimits, Math.min(dist, minDist));
+				if (pl != null)
+					minDist = Math.min(p.distanceSquaredTo(pl), minDist);
+			} else {
+				if (leftLimits.distanceSquaredTo(p) < minDist)
+					pl = nearest(n.left, p, leftLimits, Math.min(dist, minDist));
+				if (pl != null)
+					minDist = Math.min(p.distanceSquaredTo(pl), minDist);
+				if (rightLimits.distanceSquaredTo(p) < minDist)
+					pr = nearest(n.right, p, rightLimits, Math.min(dist, minDist));
+				if (pr != null)
+					minDist = Math.min(p.distanceSquaredTo(pr), minDist);
+			}
+		}
 
 		if (pl == null && pr == null)
 			return dist < minDist ? n.point : null;
