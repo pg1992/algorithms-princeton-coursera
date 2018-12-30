@@ -2,6 +2,7 @@ import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.Queue;
 import edu.princeton.cs.algs4.RectHV;
 import edu.princeton.cs.algs4.SET;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class PointSET {
 	private SET<Point2D> points;
@@ -27,6 +28,8 @@ public class PointSET {
 	}
 
 	public void draw() {
+		StdDraw.setPenColor();
+		StdDraw.setPenRadius(.01);
 		for (Point2D p : points)
 			p.draw();
 	}
